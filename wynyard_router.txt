@@ -1,0 +1,45 @@
+enable
+configure terminal
+hostname Wynyard
+
+! Configure LAN Interface
+interface fastethernet 0/0
+ ip address 10.0.40.1 255.255.248.0
+ no shutdown
+ exit
+
+! Configure WAN Interfaces
+interface serial 0/0/0
+ ip address 10.0.60.6 255.255.255.252
+ no shutdown
+ exit
+
+interface serial 0/0/1
+ ip address 10.0.60.10 255.255.255.252
+ no shutdown
+ exit
+
+interface serial 0/1/0
+ ip address 10.0.60.14 255.255.255.252
+ clock rate 64000
+ no shutdown
+ exit
+
+! Static Routing
+ip route 10.0.0.0 255.255.240.0 10.0.60.5
+ip route 10.0.0.0 255.255.240.0 10.0.60.9 10
+ip route 10.0.16.0 255.255.240.0 10.0.60.13
+ip route 10.0.48.0 255.255.248.0 10.0.60.5
+ip route 10.0.56.0 255.255.248.0 10.0.60.5
+ip route 10.0.32.0 255.255.240.0 10.0.60.5
+ip route 10.0.48.0 255.255.248.0 10.0.60.9 10
+ip route 10.0.56.0 255.255.248.0 10.0.60.9 10
+ip route 10.0.32.0 255.255.240.0 10.0.60.9 10
+ip route 10.0.60.0 255.255.255.252 10.0.60.13
+ip route 10.0.60.16 255.255.255.252 10.0.60.5
+ip route 10.0.60.20 255.255.255.252 10.0.60.5
+ip route 10.0.60.24 255.255.255.252 10.0.60.5
+
+end
+write memory
+

@@ -1,0 +1,29 @@
+enable
+configure terminal
+hostname Parramatta
+
+! Configure LAN Interface
+interface fastethernet 0/0
+ ip address 10.0.32.1 255.255.240.0
+ ip helper-address 10.0.0.2
+ no shutdown
+ exit
+
+! Configure WAN Interface
+interface serial 0/0/0
+ ip address 10.0.60.26 255.255.255.252
+ no shutdown
+ exit
+
+! Routing (RIPv2 + Default)
+router rip
+ version 2
+ no auto-summary
+ network 10.0.0.0
+ exit
+
+ip route 0.0.0.0 0.0.0.0 10.0.60.25
+
+end
+write memory
+

@@ -1,0 +1,40 @@
+enable
+configure terminal
+hostname Redfern
+
+! Configure LAN Interface
+interface fastethernet 0/0
+ ip address 10.0.48.1 255.255.248.0
+ ip helper-address 10.0.0.2
+ no shutdown
+ exit
+
+! Configure WAN Interfaces
+interface serial 0/0/0
+ ip address 10.0.60.18 255.255.255.252
+ no shutdown
+ exit
+
+interface serial 0/0/1
+ ip address 10.0.60.21 255.255.255.252
+ clock rate 64000
+ no shutdown
+ exit
+
+interface serial 0/1/0
+ ip address 10.0.60.25 255.255.255.252
+ clock rate 64000
+ no shutdown
+ exit
+
+! Routing (RIPv2 + Default)
+router rip
+ version 2
+ no auto-summary
+ network 10.0.0.0
+ exit
+
+ip route 0.0.0.0 0.0.0.0 10.0.60.17
+
+end
+write memory
